@@ -184,9 +184,13 @@ async function handleCompletions (req, apiKey) {
       body.tools = body.tools || [];
       body.tools.push({url_context: {}});
   }
-
-
-  
+  switch (true) {
+    case model.endsWith(":sandrd"):
+      model = model.slice(0,-7);
+      body.tools = body.tools || [];
+      body.tools.push({url_context: {}});
+      body.tools.push({googleSearch: {}});
+  }
   const TASK = req.stream ? "streamGenerateContent" : "generateContent";
   let url = `${BASE_URL}/${API_VERSION}/models/${model}:${TASK}`;
   if (req.stream) { url += "?alt=sse"; }
