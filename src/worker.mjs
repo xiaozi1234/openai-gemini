@@ -181,6 +181,7 @@ async function handleCompletions (req, apiKey) {
   switch (true) {
     case model.endsWith(":reader"):
       model = model.slice(0,-7);
+      body.tools = body.tools || [];
       body.tools.push({url_context: {}});
   }
 
