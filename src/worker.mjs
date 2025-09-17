@@ -178,6 +178,14 @@ async function handleCompletions (req, apiKey) {
       body.tools = body.tools || [];
       body.tools.push({googleSearch: {}});
   }
+  switch (true) {
+    case model.endsWith(":reader"):
+      model = model.slice(0,-7);
+      body.tools.push({url_context: {}});
+  }
+
+
+  
   const TASK = req.stream ? "streamGenerateContent" : "generateContent";
   let url = `${BASE_URL}/${API_VERSION}/models/${model}:${TASK}`;
   if (req.stream) { url += "?alt=sse"; }
